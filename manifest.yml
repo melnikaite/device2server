@@ -1,0 +1,13 @@
+applications:
+- name: server-app
+  command: node server.js
+  routes:
+  - route: server-app-1.mybluemix.net
+  services:
+   - mongodb-instance
+- name: device-app
+  command: node device.js
+  no-route: true
+  health-check-type: none
+  env:
+    ENDPOINT: https://server-app-1.mybluemix.net
