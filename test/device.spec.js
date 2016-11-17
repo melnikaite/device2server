@@ -11,7 +11,11 @@ describe('device', () => {
 
   it('should send post params in request body', (done) => {
     sendData();
-    expect(request.post.calledWith('http://127.0.0.1:8080', sinon.match.has('form'))).to.equal(true);
+    const matchTemperature = sinon.match((form) => {
+      const temperature = JSON.parse(form).temperature;
+      return typeof temperature === 'number';
+    });
+    expect(request.post.calledWith(process.env.ENDPOINT, { form: matchTemperature })).to.equal(true);
     done();
   });
 

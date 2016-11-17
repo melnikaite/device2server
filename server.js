@@ -1,9 +1,10 @@
 const http = require('http');
 const mongoose = require('mongoose');
 const cfenv = require('cfenv');
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'dev'}`, silent: true });
 
 const appEnv = cfenv.getAppEnv();
-mongoose.connect(appEnv.getServiceURL('mongodb-instance') || 'mongodb://127.0.0.1/device2server');
+mongoose.connect(appEnv.getServiceURL('mongodb-instance'));
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error: '));
 const Status = mongoose.model('Status', mongoose.Schema({ temperature: Number }));
@@ -24,10 +25,7 @@ module.exports.server = http.createServer((req, res) => {
   });
 });
 
-const options = {
-  host: appEnv.bind || '127.0.0.1',
+module.exports.server.listen({
+  host: appEnv.bind,
   port: appEnv.port,
-};
-module.exports.server.listen(options, () => {
-  console.log(`ENDPOINT=http://${options.host}:${options.port}`);
 });

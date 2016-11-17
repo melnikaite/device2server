@@ -2,17 +2,19 @@
   "name": "device2server",
   "version": "1.0.0",
   "scripts": {
-    "test": "ENDPOINT=http://127.0.0.1:8080 PORT=8080 mocha",
+    "test": "NODE_ENV=test mocha",
     "lint": "eslint *.js **/*.js",
-    "coverage": "ENDPOINT=http://127.0.0.1:8080 PORT=8080 istanbul cover node_modules/mocha/bin/_mocha"
+    "coverage": "NODE_ENV=test istanbul cover node_modules/mocha/bin/_mocha"
   },
   "dependencies": {
     "cfenv": "^1.0.3",
+    "dotenv": "^2.0.0",
     "mongoose": "^4.6.8",
     "request": "^2.78.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "database-cleaner": "^1.2.0",
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
